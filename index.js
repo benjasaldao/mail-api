@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const routerApi = require("./routes");
 
+const { config } = require("./config/config");
+
 const {
   logErrors,
   errorHandler,
@@ -14,17 +16,17 @@ const port = process.env.PORT || 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const allowedOrigin = process.env.ALLOWED_ORIGIN
+const allowedOrigin = config.allowedOrigin;
 const options = {
-    origin: (origin, callback) => {
-        if(origin === allowedOrigin || !origin) {
-            callback(null, true)
-        } else {
-            callback(new Error("Acceso denegado"))
-        }
+  origin: (origin, callback) => {
+    if (origin === allowedOrigin || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Acceso denegado"));
     }
-}
-app.use(cors(options))
+  },
+};
+app.use(cors(options));
 
 routerApi(app);
 

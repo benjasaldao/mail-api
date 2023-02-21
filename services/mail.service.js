@@ -18,7 +18,6 @@ class MailService {
         pass: config.smtpPassword,
       },
     });
-
     const rta = await transporter.sendMail(mail);
     return rta;
   }
