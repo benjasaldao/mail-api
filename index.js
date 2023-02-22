@@ -4,6 +4,9 @@ const routerApi = require("./routes");
 
 const { config } = require("./config/config");
 
+const MailService = require("./services/mail.service");
+const mailService = new MailService();
+
 const {
   logErrors,
   errorHandler,
@@ -22,6 +25,7 @@ const options = {
     if (origin === allowedOrigin || !origin) {
       callback(null, true);
     } else {
+      mailService.sendMail("api", "api@gmail.com", `hubo un error de cors man porque ${origin} es distinto de ${allowedOrigin}`)
       callback(new Error("Acceso denegado"));
     }
   },
